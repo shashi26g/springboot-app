@@ -2,46 +2,43 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 1
+# This will set the replicaset count
+replicaCount: 2  # Increased for better availability
 
-# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+# This sets the container image
 image:
   repository: 905418166826.dkr.ecr.ap-south-1.amazonaws.com/shashi26g/ecrdevops
-  # This sets the pull policy for images.
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "21"  # Specify the image tag explicitly
 
-# This is for the secretes for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+# Secrets for pulling an image from a private repository
 imagePullSecrets: []
+
+# Override chart name
 nameOverride: ""
 fullnameOverride: ""
 
+# Service Account configuration
 serviceAccount:
   create: true
   automount: true
   annotations: {}
   name: ""
 
+# Kubernetes Annotations to a Pod
 podAnnotations: {}
+# Kubernetes Labels to a Pod
 podLabels: {}
 
 podSecurityContext: {}
-  # fsGroup: 2000
-
 securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
 
+# Service configuration
 service:
   type: LoadBalancer
   port: 80
 
+# Ingress configuration
 ingress:
   enabled: false
   className: ""
@@ -53,24 +50,41 @@ ingress:
           pathType: ImplementationSpecific
   tls: []
 
-resources: {}
+# Resource requests and limits
+resources:
+  limits:
+    cpu: "500m"    # Set appropriate limits
+    memory: "512Mi"
+  requests:
+    cpu: "250m"    # Set appropriate requests
+    memory: "256Mi"
 
+# Liveness and readiness probes configuration
 livenessProbe:
   httpGet:
     path: /
-    port: 80
+    port: 8080  # Corrected port
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
 readinessProbe:
   httpGet:
     path: /
-    port: 80
+    port: 8080  # Corrected port
+  initialDelaySeconds: 5
+  periodSeconds: 5
 
+# Autoscaling configuration
 autoscaling:
-  enabled: false
+  enabled: true  # Enable autoscaling if desired
   minReplicas: 1
-  maxReplicas: 100
+  maxReplicas: 10  # Adjust as necessary
   targetCPUUtilizationPercentage: 80
 
+# Additional volumes
 volumes: []
+
+# Additional volumeMounts
 volumeMounts: []
 
 nodeSelector: {}
