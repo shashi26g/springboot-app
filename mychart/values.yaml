@@ -7,9 +7,9 @@ replicaCount: 2  # Increased for better availability
 
 # This sets the container image
 image:
-  repository: 905418166826.dkr.ecr.ap-south-1.amazonaws.com/shashi26g/ecrdevops
+  repository: 586794440031.dkr.ecr.ap-south-1.amazonaws.com/shashi
   pullPolicy: IfNotPresent
-  tag: "21"  # Specify the image tag explicitly
+  tag: ""  # Specify the image tag explicitly
 
 # Secrets for pulling an image from a private repository
 imagePullSecrets: []
