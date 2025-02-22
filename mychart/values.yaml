@@ -63,14 +63,14 @@ resources:
 livenessProbe:
   httpGet:
     path: /
-    port: 8080  # Corrected port
+    port: 8085  # Corrected port
   initialDelaySeconds: 10
   periodSeconds: 10
 
 readinessProbe:
   httpGet:
     path: /
-    port: 8080  # Corrected port
+    port: 8085  # Corrected port
   initialDelaySeconds: 5
   periodSeconds: 5
 
